@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AdvancedControlsPanel, CanvasFormatPanel, QuickControlsPanel } from '../components/Controls';
 import { BackgroundCanvas } from '../components/BackgroundCanvas';
 import { ExportDrawer } from '../components/ExportDrawer';
+import { GitHubLink } from '../components/GitHubLink';
 import { GuidePanel } from '../components/GuidePanel';
 import { ProjectDialog } from '../components/ProjectDialog';
 import { TemplateSidebar } from '../components/TemplateSidebar';
@@ -141,6 +142,7 @@ export function EditorPage() {
         <div className="editor-brand"><a href="/" aria-label="返回模板库"><BrandMark /></a><span className="topbar-divider" /><button className="project-switcher" type="button" onClick={() => setProjectsOpen(true)}><FolderOpen size={17} /><span>本地项目</span></button></div>
         <input className="project-name" value={project.name} maxLength={80} aria-label="项目名称" onChange={(event) => update((draft) => { draft.name = event.target.value; }, false)} onBlur={() => useProjectStore.getState().commitTransaction()} onFocus={beginTransaction} />
         <div className="topbar-actions">
+          <GitHubLink />
           <span className={`save-state ${saveState}`}><i />{saveState === 'saved' ? '已自动保存' : saveState === 'saving' ? '保存中' : '保存失败'}</span>
           <button className="icon-button desktop-only" type="button" disabled={past.length === 0} onClick={undo} aria-label="撤销"><ArrowCounterClockwise size={18} /></button>
           <button className="icon-button desktop-only" type="button" disabled={future.length === 0} onClick={redo} aria-label="重做"><ArrowClockwise size={18} /></button>

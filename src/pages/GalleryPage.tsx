@@ -9,6 +9,7 @@ import type { RendererKind, TemplateCategory } from '../types';
 import { TemplatePreview } from '../components/TemplatePreview';
 import { ProjectDialog } from '../components/ProjectDialog';
 import { BrandMark } from '../components/BrandMark';
+import { GitHubLink } from '../components/GitHubLink';
 
 type Filter = '全部' | TemplateCategory | RendererKind;
 const filters: Array<{ id: Filter; label: string }> = [
@@ -34,7 +35,10 @@ export function GalleryPage() {
     <main className="gallery-page">
       <header className="gallery-header">
         <a className="brand" href="/" aria-label="QuietBackdrop 首页"><BrandMark /><span>QuietBackdrop</span></a>
-        <button className="secondary-button" type="button" onClick={() => setProjectsOpen(true)}><FolderOpen size={18} />本地项目{projects.length > 0 && <span className="count-badge">{projects.length}</span>}</button>
+        <div className="gallery-actions">
+          <GitHubLink />
+          <button className="secondary-button" type="button" onClick={() => setProjectsOpen(true)}><FolderOpen size={18} />本地项目{projects.length > 0 && <span className="count-badge">{projects.length}</span>}</button>
+        </div>
       </header>
 
       <section className="gallery-intro">
