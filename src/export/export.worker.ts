@@ -1,5 +1,5 @@
 /// <reference lib="webworker" />
-import { BufferTarget, CanvasSource, Mp4OutputFormat, Output, StreamTarget, type StreamTargetChunk } from 'mediabunny';
+import { BufferTarget, CanvasSource, Mp4OutputFormat, Output } from 'mediabunny';
 import { drawFrame, getDimensions } from '../render/renderers';
 import type { BackgroundProject } from '../types';
 
@@ -9,7 +9,6 @@ interface ExportRequest {
   type: 'start';
   project: BackgroundProject;
   bitrate: number;
-  writable?: WritableStream<StreamTargetChunk>;
 }
 
 let cancelled = false;
@@ -24,7 +23,7 @@ self.onmessage = async (event: MessageEvent<ExportRequest | { type: 'cancel' }>)
     return;
   }
   cancelled = false;
-  const { project, bitrate, writable } = event.data;
+  const { project, bitrate } = event.data;
   let output: Output | null = null;
   try {
     postProgress('preparing', 0);
@@ -32,8 +31,8 @@ self.onmessage = async (event: MessageEvent<ExportRequest | { type: 'cancel' }>)
     const canvas = new OffscreenCanvas(width, height);
     const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) throw new Error('无法创建后台画布');
-    const target = writable ? new StreamTarget(writable, { chunked: true, chunkSize: 4 * 1024 * 1024 }) : new BufferTarget();
-    output = new Output({ format: new Mp4OutputFormat({ fastStart: writable ? 'reserve' : 'in-memory' }), target });
+    const target = new BufferTarget();
+    output = new Output({ format: new Mp4OutputFormat({ fastStart: 'in-memory' }), target });
     const source = new CanvasSource(canvas, {
       codec: 'avc', bitrate, keyFrameInterval: 2, alpha: 'discard', latencyMode: 'quality', hardwareAcceleration: 'no-preference', contentHint: 'animation',
     });
@@ -55,10 +54,8 @@ self.onmessage = async (event: MessageEvent<ExportRequest | { type: 'cancel' }>)
     postProgress('finalizing', 0.94, totalFrames, totalFrames);
     await output.finalize();
     postProgress('saving', 0.99, totalFrames, totalFrames);
-    if (target instanceof BufferTarget && target.buffer) {
+    if (target.buffer) {
       self.postMessage({ type: 'complete', buffer: target.buffer }, [target.buffer]);
-    } else {
-      self.postMessage({ type: 'complete' });
     }
   } catch (error) {
     if (output && output.state === 'started') await output.cancel().catch(() => undefined);

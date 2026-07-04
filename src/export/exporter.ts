@@ -1,4 +1,3 @@
-import type { StreamTargetChunk } from 'mediabunny';
 import { drawFrame, getDimensions } from '../render/renderers';
 import type { BackgroundProject } from '../types';
 import { downloadBlob, safeFileName } from '../lib/persistence';
@@ -6,33 +5,12 @@ import { downloadBlob, safeFileName } from '../lib/persistence';
 export type ExportStage = 'preparing' | 'rendering' | 'encoding' | 'finalizing' | 'saving';
 export interface ExportProgress { stage: ExportStage; progress: number; frame?: number; totalFrames?: number }
 
-interface FileStreamBridge {
-  writable: WritableStream<StreamTargetChunk>;
-  completion: Promise<void>;
-}
-
-declare global {
-  interface Window {
-    showSaveFilePicker?: (options?: {
-      suggestedName?: string;
-      types?: Array<{ description: string; accept: Record<string, string[]> }>;
-    }) => Promise<FileSystemFileHandle>;
-  }
-}
-
 const bitrateFor = (project: BackgroundProject) => {
   if (project.canvas.resolution === '2k') return project.animation.fps === 60 ? 24_000_000 : 16_000_000;
   return project.animation.fps === 60 ? 12_000_000 : 8_000_000;
 };
 
 export const estimateFileSize = (project: BackgroundProject) => Math.round(bitrateFor(project) * project.animation.duration / 8 / 1024 / 1024);
-
-const createFileStreamBridge = (fileStream: FileSystemWritableFileStream): FileStreamBridge => {
-  const bridge = new TransformStream<StreamTargetChunk, StreamTargetChunk>();
-  const completion = bridge.readable.pipeTo(fileStream as unknown as WritableStream<StreamTargetChunk>);
-  void completion.catch(() => undefined);
-  return { writable: bridge.writable, completion };
-};
 
 export const exportStill = async (project: BackgroundProject, format: 'png' | 'jpeg') => {
   const { width, height } = getDimensions(project.canvas.aspectRatio, project.canvas.resolution);
@@ -53,36 +31,18 @@ export const exportVideo = async (
 ) => {
   const snapshot = structuredClone(project);
   const fileName = `${safeFileName(project.name)}-${project.canvas.aspectRatio.replace(':', 'x')}.mp4`;
-  let writable: FileSystemWritableFileStream | undefined;
-  let bridge: FileStreamBridge | undefined;
-  const shouldStream = project.canvas.resolution === '2k' && (project.animation.fps === 60 || estimateFileSize(project) >= 80);
-  if (shouldStream && window.showSaveFilePicker) {
-    try {
-      const handle = await window.showSaveFilePicker({ suggestedName: fileName, types: [{ description: 'MP4 视频', accept: { 'video/mp4': ['.mp4'] } }] });
-      writable = await handle.createWritable();
-      bridge = createFileStreamBridge(writable);
-    } catch (error) {
-      if (error instanceof DOMException && error.name === 'AbortError') throw new Error('已取消选择保存位置');
-    }
-  }
 
   return new Promise<void>((resolve, reject) => {
     const worker = new Worker(new URL('./export.worker.ts', import.meta.url), { type: 'module' });
     const cleanup = () => worker.terminate();
     const cancel = () => worker.postMessage({ type: 'cancel' });
     signal?.addEventListener('abort', cancel, { once: true });
-    worker.onmessage = async (event: MessageEvent) => {
+    worker.onmessage = (event: MessageEvent) => {
       if (event.data.type === 'progress') onProgress(event.data as ExportProgress);
       if (event.data.type === 'complete') {
-        try {
-          if (event.data.buffer) downloadBlob(new Blob([event.data.buffer], { type: 'video/mp4' }), fileName);
-          await bridge?.completion;
-          cleanup();
-          resolve();
-        } catch (error) {
-          cleanup();
-          reject(error instanceof Error ? error : new Error('文件写入失败'));
-        }
+        if (event.data.buffer) downloadBlob(new Blob([event.data.buffer], { type: 'video/mp4' }), fileName);
+        cleanup();
+        resolve();
       }
       if (event.data.type === 'cancelled') {
         cleanup();
@@ -97,10 +57,6 @@ export const exportVideo = async (
       cleanup();
       reject(new Error(event.message || '导出任务启动失败'));
     };
-    if (bridge) {
-      worker.postMessage({ type: 'start', project: snapshot, bitrate: bitrateFor(snapshot), writable: bridge.writable }, [bridge.writable]);
-    } else {
-      worker.postMessage({ type: 'start', project: snapshot, bitrate: bitrateFor(snapshot) });
-    }
+    worker.postMessage({ type: 'start', project: snapshot, bitrate: bitrateFor(snapshot) });
   });
 };
