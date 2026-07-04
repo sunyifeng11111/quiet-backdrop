@@ -10,6 +10,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-20211f.svg)](./LICENSE)
 
+**[在线使用 QuietBackdrop →](https://quiet-backdrop.pages.dev/)**
+
 </div>
 
 QuietBackdrop 是一个本地优先的参数化动态背景生成器。它面向口播、知识分享和观点类视频，帮你在几分钟内做出不抢人物、不压字幕的可导出背景。
