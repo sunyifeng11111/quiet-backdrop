@@ -1,0 +1,6 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <g fill="currentColor">
+    <rect x="14" y="60" width="72" height="24" rx="12" opacity=".28"/>
+    <path d="M26 68V48C26 34.745 36.745 24 50 24S74 34.745 74 48V68H63V48C63 40.82 57.18 35 50 35S37 40.82 37 48V68H26Z"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs><rect id="dot" width="10" height="10" rx="4" fill="currentColor"/></defs>
+  <g>
+    <use href="#dot" x="18" y="18"/><use href="#dot" x="36" y="18"/><use href="#dot" x="54" y="18"/><use href="#dot" x="72" y="18"/>
+    <use href="#dot" x="18" y="36"/><use href="#dot" x="72" y="36"/>
+    <use href="#dot" x="18" y="54"/><use href="#dot" x="72" y="54"/>
+    <use href="#dot" x="18" y="72"/><use href="#dot" x="36" y="72"/><use href="#dot" x="54" y="72"/><use href="#dot" x="72" y="72"/>
+  </g>
+</svg>

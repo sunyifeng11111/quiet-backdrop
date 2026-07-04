@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QuietBackdrop — Logo Design Exploration</title>
+  <style>
+    :root { font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #191a18; background: #f4f4f0; }
+    * { box-sizing: border-box; }
+    body { max-width: 1180px; margin: 0 auto; padding: 72px 28px 96px; }
+    header { max-width: 720px; margin-bottom: 64px; }
+    h1 { margin: 0; font-size: clamp(48px, 8vw, 88px); line-height: .95; letter-spacing: -.065em; }
+    header p { margin: 22px 0 0; color: #73766f; font-size: 14px; line-height: 1.7; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    article { min-width: 0; padding: 26px; border: 1px solid #dedfd8; border-radius: 18px; background: #fbfbf8; }
+    article.selected { color: #f4f4f0; background: #191a18; border-color: #191a18; }
+    .mark { aspect-ratio: 1; display: grid; place-items: center; color: currentColor; }
+    .mark img { width: 56%; height: 56%; color: inherit; }
+    h2 { margin: 8px 0 5px; font-size: 17px; letter-spacing: -.02em; }
+    small { color: #858881; font: 11px ui-monospace, monospace; text-transform: uppercase; letter-spacing: .08em; }
+    article.selected small { color: #aeb1aa; }
+    article p { margin: 16px 0 0; color: #757871; font-size: 12px; line-height: 1.65; }
+    article.selected p { color: #c6c8c2; }
+    article.selected img { filter: invert(1); }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header><h1>QuietBackdrop</h1><p>让背景退后一步。六个方向分别测试负空间、点阵、柔和流动、主体留白、层叠画布与支撑关系。</p></header>
+  <main class="grid">
+    <article class="selected"><div class="mark"><img src="variants/01-quiet-aperture.svg" alt="Quiet Aperture" /></div><h2>Quiet Aperture</h2><small>Selected · Pure geometry</small><p>竖屏画布包围安静的中央负空间，右下开口形成 Q，同时表达背景主动让位。</p></article>
+    <article><div class="mark"><img src="variants/02-clear-field.svg" alt="Clear Field" /></div><h2>Clear Field</h2><small>Dot matrix</small><p>点阵退到四周，把视觉中心留给人物；方向准确，但小尺寸时识别力弱于首选。</p></article>
+    <article><div class="mark"><img src="variants/03-soft-signal.svg" alt="Soft Signal" /></div><h2>Soft Signal</h2><small>Line system</small><p>三层低振幅曲线传达连续动态，适合作为辅助图形，但容易被误读为音频产品。</p></article>
+    <article><div class="mark"><img src="variants/04-focus-field.svg" alt="Focus Field" /></div><h2>Focus Field</h2><small>Dots + geometry</small><p>竖屏点阵中挖出人物区域，功能最直白，也最接近产品里的真实背景结构。</p></article>
+    <article><div class="mark"><img src="variants/05-receding-frames.svg" alt="Receding Frames" /></div><h2>Receding Frames</h2><small>Lines + geometry</small><p>多层画布向后退，体现模板与背景层；轮廓偏通用，品牌独占性稍弱。</p></article>
+    <article><div class="mark"><img src="variants/06-supporting-layer.svg" alt="Supporting Layer" /></div><h2>Supporting Layer</h2><small>Layered composition</small><p>下方基底托住主体拱形，概念温和，但更像空间或建筑类品牌。</p></article>
+  </main>
+</body>
+</html>

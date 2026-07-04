@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; margin: 0; overflow: hidden; }
+    body { font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; color: #f4f3ee; background: #050505; }
+    .page { position: relative; width: 100%; height: 100%; padding: 116px 128px; display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; overflow: hidden; }
+    .page::before { content: ""; position: absolute; inset: 0; opacity: .16; background-image: radial-gradient(#c6a976 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(90deg, transparent 0, #000 42%, #000 100%); }
+    .page::after { content: ""; position: absolute; width: 700px; height: 700px; right: -70px; top: 110px; border-radius: 50%; background: rgba(194, 161, 105, .11); filter: blur(90px); }
+    .copy { position: relative; z-index: 2; align-self: center; }
+    .eyebrow { display: flex; align-items: center; gap: 18px; color: #bca57d; font: 600 23px ui-monospace, SFMono-Regular, monospace; letter-spacing: .18em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 62px; height: 2px; background: #bca57d; }
+    h1 { max-width: 1020px; margin: 42px 0 34px; font-size: 132px; line-height: .91; letter-spacing: -.07em; font-weight: 690; }
+    .tagline { margin: 0; color: #b8b8b0; font-size: 38px; line-height: 1.45; letter-spacing: -.025em; }
+    .tags { margin-top: 76px; display: flex; gap: 16px; }
+    .tags span { padding: 13px 18px; border: 1px solid #31312e; border-radius: 999px; color: #8e8e87; font: 500 20px ui-monospace, SFMono-Regular, monospace; letter-spacing: .05em; }
+    .visual { position: relative; z-index: 2; width: 620px; height: 820px; justify-self: end; display: grid; place-items: center; }
+    .frame { position: absolute; width: 410px; height: 728px; border: 1px solid #2c2c29; border-radius: 38px; background: linear-gradient(145deg, #181816, #0c0c0b); box-shadow: 0 42px 120px rgba(0,0,0,.7); transform: rotate(5deg); }
+    .frame::before { content: ""; position: absolute; inset: 38px; border-radius: 27px; background-image: radial-gradient(circle, #5a5b56 0 4px, transparent 5px); background-size: 48px 48px; opacity: .36; }
+    .safe-zone { position: absolute; z-index: 2; width: 218px; height: 430px; border-radius: 116px 116px 42px 42px; background: #0a0a09; box-shadow: 0 0 0 1px #292925, 0 28px 80px rgba(0,0,0,.55); transform: translate(-4px, 46px) rotate(5deg); }
+    .logo { position: absolute; z-index: 3; right: 36px; top: 42px; width: 142px; height: 142px; color: #f3f2ed; }
+    .caption { position: absolute; z-index: 3; left: 12px; bottom: 26px; color: #777870; font: 500 18px ui-monospace, SFMono-Regular, monospace; letter-spacing: .12em; transform: rotate(-90deg); transform-origin: left bottom; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="copy">
+      <div class="eyebrow">Motion backgrounds for creators</div>
+      <h1>QuietBackdrop</h1>
+      <p class="tagline">让背景退后一步。</p>
+      <div class="tags"><span>PARAMETRIC</span><span>LOCAL-FIRST</span><span>MP4 EXPORT</span></div>
+    </section>
+    <section class="visual">
+      <div class="frame"></div>
+      <div class="safe-zone"></div>
+      <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><mask id="cut"><rect width="100" height="100" fill="white"/><circle cx="48" cy="47" r="18" fill="black"/><path d="M58 58L75 75" stroke="black" stroke-width="10" stroke-linecap="round"/></mask></defs>
+        <rect x="14" y="14" width="72" height="72" rx="22" fill="currentColor" mask="url(#cut)"/>
+      </svg>
+      <span class="caption">SUBTLE BY DESIGN</span>
+    </section>
+  </main>
+</body>
+</html>
