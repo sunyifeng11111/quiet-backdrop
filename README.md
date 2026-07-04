@@ -18,7 +18,9 @@ QuietBackdrop 是一个本地优先的参数化动态背景生成器。它面向
 
 ## 你会得到什么
 
-<img src="assets/features.webp" alt="QuietBackdrop 竖屏动态背景模板" width="100%">
+<img src="assets/gallery.webp" alt="QuietBackdrop 动态背景模板选择页" width="100%">
+
+<img src="assets/editor.webp" alt="QuietBackdrop 竖屏动态背景编辑器" width="100%">
 
 - 12 个可直接使用的动态起点，覆盖网格、十字、点阵和流动线条。
 - 密度、速度、能量、方向、配色和高级图形参数实时调整。
