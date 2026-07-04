@@ -69,3 +69,14 @@ npm run preview   # 预览生产构建
 ## 许可证
 
 [MIT](./LICENSE) © 2026 [sunyifeng11111](https://github.com/sunyifeng11111)
+
+## 关于作者
+
+**孙同学玩AI**
+
+| 平台 | 账号 |
+| --- | --- |
+| 小红书 | 孙同学玩AI |
+| 视频号 | 孙同学玩AI |
+| 抖音 | 孙同学玩AI |
+| 公众号 | 孙同学玩AI |
