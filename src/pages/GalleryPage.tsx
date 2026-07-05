@@ -47,7 +47,7 @@ export function GalleryPage() {
           <h1>选一个背景，<br />三分钟就能用。</h1>
           <p>不抢人物，不压字幕。每个模板都能实时调整，并直接导出为视频或图片。</p>
         </div>
-        <div className="intro-note"><b>12</b><span>个可直接使用的<br />动态起点</span></div>
+        <div className="intro-note"><b>{templates.length}</b><span>个可直接使用的<br />动态起点</span></div>
       </section>
 
       <nav className="filter-row" aria-label="模板筛选">

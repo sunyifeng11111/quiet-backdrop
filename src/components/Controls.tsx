@@ -74,8 +74,16 @@ export function QuickControlsPanel() {
       <section className="control-section compact-ranges">
         {range('density', '密度')}
         {range('speed', '速度')}
-        {range('energy', '动感')}
-        {range('direction', '方向', 360, `${Math.round(project.quick.direction)}°`)}
+        {project.renderer !== 'scroll-grid' && range('energy', '动感')}
+        {project.renderer === 'scroll-grid' ? (
+          <div className="direction-control">
+            <span><b>滑动方向</b><output>{project.quick.direction === 90 ? '向下' : '向上'}</output></span>
+            <div className="segmented-tabs" role="group" aria-label="网格滑动方向">
+              <button type="button" data-state={project.quick.direction !== 90 ? 'active' : 'inactive'} aria-pressed={project.quick.direction !== 90} onClick={() => setQuick('direction', 270)}>向上滑动</button>
+              <button type="button" data-state={project.quick.direction === 90 ? 'active' : 'inactive'} aria-pressed={project.quick.direction === 90} onClick={() => setQuick('direction', 90)}>向下滑动</button>
+            </div>
+          </div>
+        ) : range('direction', '方向', 360, `${Math.round(project.quick.direction)}°`)}
       </section>
       <div className="two-button-row">
         <button className="secondary-button" type="button" onClick={() => update((draft) => { draft.quick.seed = Math.floor(Math.random() * 100000); })}><DiceFive size={17} />生成变体</button>
