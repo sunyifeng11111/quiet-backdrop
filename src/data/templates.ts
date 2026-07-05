@@ -22,7 +22,32 @@ const quick = (values: Partial<QuickControls>): QuickControls => ({
   ...values,
 });
 
-export const templates: BackgroundTemplate[] = [
+const templateCatalog: BackgroundTemplate[] = [
+  {
+    id: 'mono-scroll-grid', name: '黑色小网格', description: '灰白细线纵向匀速滑动', renderer: 'scroll-grid', category: '低干扰',
+    quick: quick({ background: '#000000', foreground: '#b8bdc2', accent: '#b8bdc2', density: 0.72, speed: 0.34, energy: 0, direction: 270, seed: 17 }),
+    advanced: { ...advanced, spacing: 1, thickness: 0.8, amplitude: 0, frequency: 1, perspective: 0, opacity: 0.28 },
+  },
+  {
+    id: 'ambient-gradient', name: '流动渐变', description: '低饱和色彩缓慢漂移', renderer: 'gradient', category: '低干扰',
+    quick: quick({ background: '#0d1020', foreground: '#5f7dff', accent: '#bc5cff', density: 0.42, speed: 0.22, energy: 0.34, direction: 12, seed: 37 }),
+    advanced: { ...advanced, spacing: 1.15, thickness: 0.8, amplitude: 0.9, frequency: 0.7, perspective: 0, opacity: 0.72, scale: 1.15 },
+  },
+  {
+    id: 'soft-spotlight', name: '柔光呼吸', description: '蓝紫柔光缓慢交叠', renderer: 'spotlight', category: '低干扰',
+    quick: quick({ background: '#070910', foreground: '#7ea2ff', accent: '#a65cff', density: 0.42, speed: 0.2, energy: 0.44, direction: 0, seed: 52 }),
+    advanced: { ...advanced, spacing: 1.15, thickness: 0.7, amplitude: 0.9, frequency: 1, perspective: 0, opacity: 0.82, scale: 1.08 },
+  },
+  {
+    id: 'film-grain', name: '复古胶片', description: '暖色颗粒、尘点与轻微漏光', renderer: 'grain', category: '极简',
+    quick: quick({ background: '#1a120d', foreground: '#f1dfc2', accent: '#b65f32', density: 0.72, speed: 0.52, energy: 0.38, direction: 0, seed: 83 }),
+    advanced: { ...advanced, spacing: 0.9, thickness: 1.05, amplitude: 0.75, frequency: 1, perspective: 0, opacity: 0.46, scale: 1.05 },
+  },
+  {
+    id: 'signal-scanline', name: '数据扫描', description: '横向扫描线与移动光带', renderer: 'scanline', category: '科技感',
+    quick: quick({ background: '#05090a', foreground: '#4d756f', accent: '#72f2c9', density: 0.6, speed: 0.36, energy: 0.32, direction: 0, seed: 119 }),
+    advanced: { ...advanced, spacing: 0.72, thickness: 0.65, amplitude: 0.8, frequency: 1, perspective: 0, opacity: 0.44 },
+  },
   {
     id: 'quiet-grid', name: '静音网格', description: '给字幕留足呼吸感', renderer: 'grid', category: '低干扰',
     quick: quick({ background: '#f1f0eb', foreground: '#8d918b', accent: '#4d6bff', density: 0.8, speed: 0.18, energy: 0.12 }),
@@ -84,5 +109,33 @@ export const templates: BackgroundTemplate[] = [
     advanced: { ...advanced, spacing: 0.72, thickness: 1, amplitude: 1.4, frequency: 1.55, opacity: 0.72 },
   },
 ];
+
+const templateOrder = [
+  'mono-scroll-grid',
+  'quiet-grid',
+  'signal-cross',
+  'quiet-cross',
+  'soft-dots',
+  'mono-dots',
+  'pulse-cross',
+  'ambient-gradient',
+  'soft-spotlight',
+  'film-grain',
+  'signal-scanline',
+  'blueprint-grid',
+  'kinetic-grid',
+  'data-dots',
+  'calm-flow',
+  'editorial-flow',
+  'wave-flow',
+] as const;
+
+const templatesById = new Map(templateCatalog.map((template) => [template.id, template]));
+
+export const templates = templateOrder.map((id) => {
+  const template = templatesById.get(id);
+  if (!template) throw new Error(`未找到模板：${id}`);
+  return template;
+});
 
 export const getTemplate = (id: string) => templates.find((item) => item.id === id) ?? templates[0];

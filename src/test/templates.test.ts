@@ -4,11 +4,40 @@ import { createProject } from '../store/projectStore';
 import { projectSchema } from '../types';
 
 describe('template catalog', () => {
-  it('contains three complete templates for every renderer', () => {
-    expect(templates).toHaveLength(12);
+  it('keeps the requested editor templates at the front in order', () => {
+    expect(templates.slice(0, 7).map((template) => template.id)).toEqual([
+      'mono-scroll-grid',
+      'quiet-grid',
+      'signal-cross',
+      'quiet-cross',
+      'soft-dots',
+      'mono-dots',
+      'pulse-cross',
+    ]);
+  });
+
+  it('contains the complete template catalog', () => {
+    expect(templates).toHaveLength(17);
     for (const renderer of ['grid', 'cross', 'dots', 'flow']) {
       expect(templates.filter((template) => template.renderer === renderer)).toHaveLength(3);
     }
+    expect(templates.filter((template) => template.renderer === 'scroll-grid')).toHaveLength(1);
+    for (const renderer of ['gradient', 'spotlight', 'grain', 'scanline']) {
+      expect(templates.filter((template) => template.renderer === renderer)).toHaveLength(1);
+    }
+  });
+
+  it('includes the four creator-focused background templates', () => {
+    expect(templates.map((template) => template.id)).toEqual(expect.arrayContaining([
+      'ambient-gradient', 'soft-spotlight', 'film-grain', 'signal-scanline',
+    ]));
+  });
+
+  it('includes a black vertical scrolling small-grid template', () => {
+    const template = templates.find((item) => item.id === 'mono-scroll-grid');
+    expect(template?.quick.background).toBe('#000000');
+    expect(template?.quick.direction).toBe(270);
+    expect(template?.advanced.opacity).toBeLessThan(0.4);
   });
 
   it('creates schema-valid projects from every template', () => {

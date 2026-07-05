@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const rendererKinds = ['grid', 'cross', 'dots', 'flow'] as const;
+export const rendererKinds = ['grid', 'scroll-grid', 'gradient', 'spotlight', 'grain', 'scanline', 'cross', 'dots', 'flow'] as const;
 export const aspectRatios = ['9:16', '16:9', '1:1', '4:5'] as const;
 export const guideModes = ['none', 'center-person', 'left-person', 'title-subtitle'] as const;
 

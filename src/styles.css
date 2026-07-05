@@ -204,6 +204,10 @@ button:disabled { cursor: not-allowed; opacity: 0.42; }
 .range-control > span { display: flex; align-items: center; justify-content: space-between; }
 .range-control b { color: #bdc0ba; font-size: 11px; font-weight: 620; }
 .range-control output { color: #7f827c; font-family: ui-monospace, monospace; font-size: 9px; }
+.direction-control { display: grid; gap: 9px; }
+.direction-control > span { display: flex; align-items: center; justify-content: space-between; }
+.direction-control b { color: #bdc0ba; font-size: 11px; font-weight: 620; }
+.direction-control output { color: #7f827c; font-family: ui-monospace, monospace; font-size: 9px; }
 .slider-root { position: relative; height: 16px; display: flex; align-items: center; user-select: none; touch-action: none; }
 .slider-track { position: relative; height: 3px; flex-grow: 1; overflow: hidden; border-radius: 2px; background: #41423e; }
 .slider-range { position: absolute; height: 100%; border-radius: 2px; background: #8fa2ff; }

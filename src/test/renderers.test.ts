@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { animationPhase, getDimensions } from '../render/renderers';
+import { animationPhase, getDimensions, loopingPhase, scrollGridOffset } from '../render/renderers';
 
 describe('rendering dimensions', () => {
   it.each([
@@ -19,5 +19,24 @@ describe('animation phase', () => {
     const slowTravel = animationPhase(1, 0.2);
     const fastTravel = animationPhase(1, 0.8);
     expect(fastTravel).toBeGreaterThan(slowTravel);
+  });
+});
+
+describe('scrolling grid', () => {
+  it('moves upward or downward based on the selected direction', () => {
+    expect(scrollGridOffset(1, 10, 0.4, 40, 270)).toBeLessThan(0);
+    expect(scrollGridOffset(1, 10, 0.4, 40, 90)).toBeGreaterThan(0);
+  });
+
+  it('returns to its starting position at the loop boundary', () => {
+    expect(scrollGridOffset(0, 10, 0.4, 40, 270)).toBe(0);
+    expect(scrollGridOffset(10, 10, 0.4, 40, 270)).toBe(0);
+  });
+});
+
+describe('looping creator backgrounds', () => {
+  it('returns to the same phase at the duration boundary', () => {
+    expect(loopingPhase(0, 10, 0.4)).toBe(0);
+    expect(loopingPhase(10, 10, 0.4)).toBe(0);
   });
 });
