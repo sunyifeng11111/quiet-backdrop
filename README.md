@@ -10,7 +10,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-20211f.svg)](./LICENSE)
 
-**[在线使用 QuietBackdrop →](https://quiet-backdrop.pages.dev/)**
+**[在线使用 QuietBackdrop →](https://backdrop.suntongxue.me/)**
 
 </div>
 
